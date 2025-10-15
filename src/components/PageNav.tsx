@@ -1,16 +1,26 @@
+import { Link } from "react-router-dom";
+
 const PageNav = () => {
+  const pages = [
+    { name: "Page 1", path: "/" },
+    { name: "Page 2", path: "/about" },
+    { name: "Page 3", path: "/register" },
+    { name: "Page 4", path: "/rules" },
+    { name: "Page 5", path: "/jury" },
+  ];
+
   return (
     <div className="bg-primary text-primary-foreground py-3">
       <div className="container mx-auto px-4">
         <div className="flex justify-end gap-6">
-          {["Page 1", "Page 2", "Page 3", "Page 4", "Page 5"].map((page) => (
-            <a
-              key={page}
-              href={`#${page.toLowerCase().replace(" ", "-")}`}
+          {pages.map((page) => (
+            <Link
+              key={page.name}
+              to={page.path}
               className="font-bold text-sm hover:text-accent transition-colors"
             >
-              {page}
-            </a>
+              {page.name}
+            </Link>
           ))}
         </div>
       </div>
