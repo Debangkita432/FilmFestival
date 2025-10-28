@@ -85,9 +85,19 @@ const Auth = () => {
     setError("");
     setLoading(true);
     try {
-      if (email === "Admin1234@gmail" && password === "135790") {
+      if (email === "Admin1234@gmail.com" && password === "135790" && isLogin) {
         console.log("Admin login detected");
+        const usercredentials = await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+        if(usercredentials.user){
+        setUid(usercredentials.user.uid);
+        localStorage.setItem("adminUid", usercredentials.user.uid);
+        localStorage.setItem("isAdmin", "true");
         navigate("/AdminPanel");
+        }
         return; // stop further execution
       }
       let userCredential: any;

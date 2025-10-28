@@ -44,7 +44,12 @@ const Footer = () => {
               >
                 <Phone className="w-5 h-5" />
               </a>
+
             </div>
+            <p className="text-xs">
+                Made with love by <strong>Souherdya Sarkar, Debangshu Chatterjee, 
+                Debangkita Saha, Aranya Rath, Sylvia Barick, Debojyoti Dey Majumder</strong>
+            </p>
           </div>
 
           {/* Quick Links */}

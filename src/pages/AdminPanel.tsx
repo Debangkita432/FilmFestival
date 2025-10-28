@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import { auth, googleProvider } from "../utils/firebaseConfig";
 // import Navigation from "@/components/Navigation"; // Removed to fix import error
 // import Footer from "@/components/Footer"; // Removed to fix import error
 import { motion } from "framer-motion";
@@ -28,12 +29,17 @@ import {
   Inbox,
   ArrowRight,
 } from "lucide-react";
+import { toast } from "sonner";
 
 // --- Placeholder Components (to resolve import errors) ---
 
 // --- Helper Card Components ---
 
 // Card for top-level stats
+
+
+
+
 const StatCard = ({ icon: Icon, title, value, loading }) => (
   <motion.div
     className="film-card rounded-2xl p-5 bg-[#2b0b0b]/60 border border-[#f3e3d5]/10 flex items-center gap-4"
@@ -89,6 +95,20 @@ const AdminPanel = () => {
   const [sheetData, setSheetData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+
+  useEffect(()=>{
+  const checkIfLoggedInAsAdmin = () => {
+    const isAdmin = localStorage.getItem('isAdmin');
+    if(isAdmin && auth.currentUser?.uid){
+      console.log("Admin is logged in");
+    } else {
+      toast.error("You must be logged in as admin to access the admin panel.");
+      window.location.href = '/auth';
+    }
+  }
+  checkIfLoggedInAsAdmin();
+},[])
 
   const desiredColumns = [
     "name",
@@ -312,28 +332,6 @@ const AdminPanel = () => {
                 </div>
               )}
             </motion.div>
-
-            {/* --- Management Cards --- */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-              <ManagementCard
-                icon={Users}
-                title="Users"
-                desc="Manage user accounts, roles, and permissions."
-                index={0}
-              />
-              <ManagementCard
-                icon={ClipboardCheck}
-                title="Registrations"
-                desc="View and approve event participants and attendees."
-                index={1}
-              />
-              <ManagementCard
-                icon={CreditCard}
-                title="Payments"
-                desc="Monitor transactions and verify payment records."
-                index={2}
-              />
-            </div>
           </motion.div>
         </div>
       </main>
